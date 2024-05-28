@@ -180,7 +180,7 @@ include 'components/like_post.php';
       </div>
 
       <div class="more-btn" style="text-align: center; margin-top:1rem;">
-         <a href="posts.php" class="inline-btn">ver todas las publicaciones</a>
+         <a href="posts.php" class="inline-btn">Ver todas las publicaciones</a>
       </div>
 
    </section>

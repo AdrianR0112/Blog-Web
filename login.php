@@ -56,9 +56,19 @@ if(isset($_POST['submit'])){
       <input type="email" name="email" required placeholder="Introduce tu email" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="pass" required placeholder="Introduce tu contraseña" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="submit" value="Iniciar Sesion" name="submit" class="btn">
+      <div align="center">
+
+      <?php require ('autentificacion.php'); ?>
+      <button type="button" name="google" class="btn2" onclick="window.location.href='<?php echo $client->createAuthUrl(); ?>'">
+         <i class="fa-brands fa-google"></i>
+         Iniciar sesión con Google
+      </button>
+
+
       <p>¿No tienes una cuenta? <a href="register.php">Registrate ahora</a></p>
    </form>
 
+   
 </section>
 
 
