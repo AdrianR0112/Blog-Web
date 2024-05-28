@@ -69,12 +69,12 @@ include 'components/like_post.php';
                $count_user_likes->execute([$user_id]);
                $total_user_likes = $count_user_likes->rowCount();
                ?>
-               <p> bienvenido <span><?= $fetch_profile['name']; ?></span></p>
-               <p>total comentarios : <span><?= $total_user_comments; ?></span></p>
-               <p>posts gustados : <span><?= $total_user_likes; ?></span></p>
-               <a href="update.php" class="btn">actualizar perfil</a>
+               <p>Bienvenido <span><?= $fetch_profile['name']; ?></span></p>
+               <p>Total Comentarios : <span><?= $total_user_comments; ?></span></p>
+               <p>Posts que te gustaron : <span><?= $total_user_likes; ?></span></p>
+               <a href="update.php" class="btn">Actualizar perfil</a>
                <div class="flex-btn">
-                  <a href="user_likes.php" class="option-btn">me gusta</a>
+                  <a href="user_likes.php" class="option-btn">Me gusta</a>
                   <a href="user_comments.php" class="option-btn">comentarios</a>
                </div>
                <?php
