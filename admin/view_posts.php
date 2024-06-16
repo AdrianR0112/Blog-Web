@@ -4,9 +4,9 @@ include '../components/connect.php';
 
 session_start();
 
-$admin_id = $_SESSION['admin_id'];
+$user_id = $_SESSION['admin_id'];
 
-if(!isset($admin_id)){
+if(!isset($user_id)){
    header('location:admin_login.php');
 }
 
@@ -57,7 +57,7 @@ if(isset($_POST['delete'])){
 
       <?php
          $select_posts = $conn->prepare("SELECT * FROM `posts` WHERE admin_id = ?");
-         $select_posts->execute([$admin_id]);
+         $select_posts->execute([$user_id]);
          if($select_posts->rowCount() > 0){
             while($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)){
                $post_id = $fetch_posts['id'];

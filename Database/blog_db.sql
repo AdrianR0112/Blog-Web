@@ -77,7 +77,7 @@ CREATE TABLE `likes` (
 
 CREATE TABLE `posts` (
   `id` int(100) NOT NULL,
-  `admin_id` int(100) NOT NULL,
+  `user_id` int(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `title` varchar(100) NOT NULL,
   `content` varchar(10000) NOT NULL,

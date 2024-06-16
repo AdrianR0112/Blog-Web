@@ -16,21 +16,21 @@ $get_id = $_GET['post_id'];
 
 if(isset($_POST['add_comment'])){
 
-   $admin_id = $_POST['admin_id'];
-   $admin_id = filter_var($admin_id, FILTER_SANITIZE_STRING);
+   $user_id = $_POST['admin_id'];
+   $user_id = filter_var($user_id, FILTER_SANITIZE_STRING);
    $user_name = $_POST['user_name'];
    $user_name = filter_var($user_name, FILTER_SANITIZE_STRING);
    $comment = $_POST['comment'];
    $comment = filter_var($comment, FILTER_SANITIZE_STRING);
 
    $verify_comment = $conn->prepare("SELECT * FROM `comments` WHERE post_id = ? AND admin_id = ? AND user_id = ? AND user_name = ? AND comment = ?");
-   $verify_comment->execute([$get_id, $admin_id, $user_id, $user_name, $comment]);
+   $verify_comment->execute([$get_id, $user_id, $user_id, $user_name, $comment]);
 
    if($verify_comment->rowCount() > 0){
       $message[] = 'comment already added!';
    }else{
       $insert_comment = $conn->prepare("INSERT INTO `comments`(post_id, admin_id, user_id, user_name, comment) VALUES(?,?,?,?,?)");
-      $insert_comment->execute([$get_id, $admin_id, $user_id, $user_name, $comment]);
+      $insert_comment->execute([$get_id, $user_id, $user_id, $user_name, $comment]);
       $message[] = 'new comment added!';
    }
 
@@ -135,7 +135,7 @@ if(isset($_POST['delete_comment'])){
       ?>
       <form class="box" method="post">
          <input type="hidden" name="post_id" value="<?= $post_id; ?>">
-         <input type="hidden" name="admin_id" value="<?= $fetch_posts['admin_id']; ?>">
+         <input type="hidden" name="admin_id" value="<?= $fetch_posts['user_id']; ?>">
          <div class="post-admin">
             <i class="fas fa-user"></i>
             <div>
@@ -171,7 +171,7 @@ if(isset($_POST['delete_comment'])){
 
 <section class="comments-container">
 
-   <p class="comment-title">add comment</p>
+   <p class="comment-title">Añadir comentario</p>
    <?php
       if($user_id != ''){  
          $select_admin_id = $conn->prepare("SELECT * FROM `posts` WHERE id = ?");
@@ -179,24 +179,24 @@ if(isset($_POST['delete_comment'])){
          $fetch_admin_id = $select_admin_id->fetch(PDO::FETCH_ASSOC);
    ?>
    <form action="" method="post" class="add-comment">
-      <input type="hidden" name="admin_id" value="<?= $fetch_admin_id['admin_id']; ?>">
+      <input type="hidden" name="admin_id" value="<?= $fetch_admin_id['user_id']; ?>">
       <input type="hidden" name="user_name" value="<?= $fetch_profile['name']; ?>">
       <p class="user"><i class="fas fa-user"></i><a href="update.php"><?= $fetch_profile['name']; ?></a></p>
-      <textarea name="comment" maxlength="1000" class="comment-box" cols="30" rows="10" placeholder="write your comment" required></textarea>
-      <input type="submit" value="add comment" class="inline-btn" name="add_comment">
+      <textarea name="comment" maxlength="1000" class="comment-box" cols="30" rows="10" placeholder="escribe tu comentario" required></textarea>
+      <input type="submit" value="Añadir comentario" class="inline-btn" name="add_comment">
    </form>
    <?php
    }else{
    ?>
    <div class="add-comment">
-      <p>please login to add or edit your comment</p>
-      <a href="login.php" class="inline-btn">login now</a>
+      <p>Por favor inicia sesión para agregar o editar tu comentario</p>
+      <a href="login.php" class="inline-btn">iniciar sesión ahora</a>
    </div>
    <?php
       }
    ?>
    
-   <p class="comment-title">post comments</p>
+   <p class="comment-title">Comentarios del post</p>
    <div class="user-comments-container">
       <?php
          $select_comments = $conn->prepare("SELECT * FROM `comments` WHERE post_id = ?");
@@ -218,8 +218,8 @@ if(isset($_POST['delete_comment'])){
          ?>
          <form action="" method="POST">
             <input type="hidden" name="comment_id" value="<?= $fetch_comments['id']; ?>">
-            <button type="submit" class="inline-option-btn" name="open_edit_box">edit comment</button>
-            <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('delete this comment?');">delete comment</button>
+            <button type="submit" class="inline-option-btn" name="open_edit_box">editar comentario</button>
+            <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('¿Deseas eliminar este comentario?');">eliminar comentario</button>
          </form>
          <?php
          }
@@ -228,21 +228,12 @@ if(isset($_POST['delete_comment'])){
       <?php
             }
          }else{
-            echo '<p class="empty">no comments added yet!</p>';
+            echo '<p class="empty">¡Aún no se han agregado comentarios!</p>';
          }
       ?>
    </div>
 
 </section>
-
-
-
-
-
-
-
-
-
 
 <?php include 'components/footer.php'; ?>
 

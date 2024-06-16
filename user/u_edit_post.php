@@ -4,10 +4,10 @@ include '../components/connect.php';
 
 session_start();
 
-$user_id = $_SESSION['admin_id'];
+$user_id = $_SESSION['user_id'];
 
 if (!isset($user_id)) {
-   header('location:admin_login.php');
+   header('location:../login.php');
 }
 
 if (isset($_POST['save'])) {
@@ -25,7 +25,7 @@ if (isset($_POST['save'])) {
    $update_post = $conn->prepare("UPDATE `posts` SET title = ?, content = ?, category = ?, status = ? WHERE id = ?");
    $update_post->execute([$title, $content, $category, $status, $post_id]);
 
-   $message[] = 'post updated!';
+   $message[] = 'Post Actualizado!';
 
    $old_image = $_POST['old_image'];
    $image = $_FILES['image']['name'];
@@ -34,22 +34,22 @@ if (isset($_POST['save'])) {
    $image_tmp_name = $_FILES['image']['tmp_name'];
    $image_folder = '../uploaded_img/' . $image;
 
-   $select_image = $conn->prepare("SELECT * FROM `posts` WHERE image = ? AND admin_id = ?");
+   $select_image = $conn->prepare("SELECT * FROM `posts` WHERE image = ? AND user_id = ?");
    $select_image->execute([$image, $user_id]);
 
    if (!empty($image)) {
       if ($image_size > 2000000) {
-         $message[] = 'images size is too large!';
-      } elseif ($select_image->rowCount() > 0 and $image != '') {
-         $message[] = 'please rename your image!';
-      } else {
+          $message[] = 'El tamaño de la imagen es demasiado grande!';
+        } elseif ($select_image->rowCount() > 0 and $image != '') {
+          $message[] = 'Por favor cambie el nombre de su imagen!';
+        } else {
          $update_image = $conn->prepare("UPDATE `posts` SET image = ? WHERE id = ?");
          move_uploaded_file($image_tmp_name, $image_folder);
          $update_image->execute([$image, $post_id]);
          if ($old_image != $image and $old_image != '') {
             unlink('../uploaded_img/' . $old_image);
          }
-         $message[] = 'image updated!';
+         $message[] = 'Imagen Actualizada!';
       }
    }
 
@@ -70,8 +70,7 @@ if (isset($_POST['delete_post'])) {
    $delete_post->execute([$post_id]);
    $delete_comments = $conn->prepare("DELETE FROM `comments` WHERE post_id = ?");
    $delete_comments->execute([$post_id]);
-   $message[] = 'post deleted successfully!';
-
+   $message[] = '¡Post eliminado exitosamente!';
 }
 
 if (isset($_POST['delete_image'])) {
@@ -87,7 +86,7 @@ if (isset($_POST['delete_image'])) {
    }
    $unset_image = $conn->prepare("UPDATE `posts` SET image = ? WHERE id = ?");
    $unset_image->execute([$empty_image, $post_id]);
-   $message[] = 'image deleted successfully!';
+   $message[] = 'Imagen eliminada exitosamente!';
 
 }
 
@@ -101,7 +100,7 @@ if (isset($_POST['delete_image'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>posts</title>
+   <title>Posts</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -113,11 +112,11 @@ if (isset($_POST['delete_image'])) {
 
 <body>
 
-   <?php include '../components/admin_header.php' ?>
+   <?php include '../components/u_header.php' ?>
 
    <section class="post-editor">
 
-      <h1 class="heading">edit post</h1>
+      <h1 class="heading">Editar Post</h1>
 
       <?php
       $post_id = $_GET['id'];
@@ -129,64 +128,64 @@ if (isset($_POST['delete_image'])) {
             <form action="" method="post" enctype="multipart/form-data">
                <input type="hidden" name="old_image" value="<?= $fetch_posts['image']; ?>">
                <input type="hidden" name="post_id" value="<?= $fetch_posts['id']; ?>">
-               <p>post status <span>*</span></p>
+               <p>Estado del Post <span>*</span></p>
                <select name="status" class="box" required>
                   <option value="<?= $fetch_posts['status']; ?>" selected><?= $fetch_posts['status']; ?></option>
-                  <option value="active">active</option>
-                  <option value="deactive">deactive</option>
+                  <option value="active">Activo</option>
+                  <option value="deactive">Desactivo</option>
                </select>
-               <p>post title <span>*</span></p>
+               <p>Título del post<span>*</span></p>
                <input type="text" name="title" maxlength="100" required placeholder="add post title" class="box"
                   value="<?= $fetch_posts['title']; ?>">
-               <p>post content <span>*</span></p>
+               <p>Contenido del post<span>*</span></p>
                <textarea name="content" class="box" required maxlength="10000" placeholder="write your content..." cols="30"
                   rows="10"><?= $fetch_posts['content']; ?></textarea>
-               <p>post category <span>*</span></p>
+               <p>Categoría del post<span>*</span></p>
                <select name="category" class="box" required>
                   <option value="<?= $fetch_posts['category']; ?>" selected><?= $fetch_posts['category']; ?></option>
-                  <option value="naturaleza">naturaleza</option>
-                  <option value="educacion">educación</option>
-                  <option value="mascotas_y_animales">mascotas y animales</option>
-                  <option value="tecnologia">tecnología</option>
-                  <option value="moda">moda</option>
-                  <option value="entretenimiento">entretenimiento</option>
-                  <option value="peliculas">películas</option>
-                  <option value="juegos">juegos</option>
-                  <option value="musica">música</option>
-                  <option value="deportes">deportes</option>
-                  <option value="noticias">noticias</option>
-                  <option value="viajes">viajes</option>
-                  <option value="comedia">comedia</option>
-                  <option value="diseño_y_desarrollo">diseño y desarrollo</option>
-                  <option value="comida_y_bebidas">comida y bebidas</option>
-                  <option value="estilo_de_vida">estilo de vida</option>
-                  <option value="personal">personal</option>
-                  <option value="salud_y_fitness">salud y fitness</option>
-                  <option value="negocios">negocios</option>
-                  <option value="compras">compras</option>
-                  <option value="animaciones">animaciones</option>
+                  <option value="nature">Naturaleza</option>
+                  <option value="education">Educación</option>
+                  <option value="pets and animals">Mascotas y animales</option>
+                  <option value="technology">Tecnología</option>
+                  <option value="fashion">Moda</option>
+                  <option value="entertainment">Entretenimiento</option>
+                  <option value="movies and animations">Cine y animaciones</option>
+                  <option value="gaming">Videojuegos</option>
+                  <option value="music">Música</option>
+                  <option value="sports">Deportes</option>
+                  <option value="news">Noticias</option>
+                  <option value="travel">Viajes</option>
+                  <option value="comedy">Comedia</option>
+                  <option value="design and development">Diseño y desarrollo</option>
+                  <option value="food and drinks">Comida y bebidas</option>
+                  <option value="lifestyle">Estilo de vida</option>
+                  <option value="personal">Personal</option>
+                  <option value="health and fitness">Salud y fitness</option>
+                  <option value="business">Negocios</option>
+                  <option value="shopping">Compras</option>
+                  <option value="animations">Animaciones</option>
                </select>
-               <p>post image</p>
+               <p>Imagen del post</p>
                <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png, image/webp">
                <?php if ($fetch_posts['image'] != '') { ?>
                   <img src="../uploaded_img/<?= $fetch_posts['image']; ?>" class="image" alt="">
-                  <input type="submit" value="delete image" class="inline-delete-btn" name="delete_image">
+                  <input type="submit" value="Eliminar Imagen" class="inline-delete-btn" name="delete_image">
                <?php } ?>
                <div class="flex-btn">
-                  <input type="submit" value="save post" name="save" class="btn">
-                  <a href="view_posts.php" class="option-btn">go back</a>
-                  <input type="submit" value="delete post" class="delete-btn" name="delete_post">
+                  <input type="submit" value="Guardar Post" name="save" class="btn">
+                  <a href="u_view_posts.php" class="option-btn">Regresar</a>
+                  <input type="submit" value="Eliminar Post" class="delete-btn" name="delete_post">
                </div>
             </form>
 
             <?php
          }
       } else {
-         echo '<p class="empty">no posts found!</p>';
+         echo '<p class="empty">¡No se encontraron publicaciones!</p>';
          ?>
          <div class="flex-btn">
-            <a href="view_posts.php" class="option-btn">view posts</a>
-            <a href="add_posts.php" class="option-btn">add posts</a>
+            <a href="u_view_posts.php" class="option-btn">Mirar Posts</a>
+            <a href="u_add_posts.php" class="option-btn">Añadir Posts</a>
          </div>
          <?php
       }
@@ -194,16 +193,6 @@ if (isset($_POST['delete_image'])) {
 
    </section>
 
-
-
-
-
-
-
-
-
-
-   <!-- custom js file link  -->
    <script src="../js/admin_script.js"></script>
 
 </body>

@@ -4,10 +4,10 @@ include '../components/connect.php';
 
 session_start();
 
-$admin_id = $_SESSION['admin_id'];
+$user_id = $_SESSION['user_id'];
 
-if(!isset($admin_id)){
-   header('location:admin_login.php');
+if(!isset($user_id)){
+   header('location:../login.php');
 }
 
 if(isset($_POST['delete_comment'])){
@@ -16,7 +16,7 @@ if(isset($_POST['delete_comment'])){
    $comment_id = filter_var($comment_id, FILTER_SANITIZE_STRING);
    $delete_comment = $conn->prepare("DELETE FROM `comments` WHERE id = ?");
    $delete_comment->execute([$comment_id]);
-   $message[] = 'comment delete!';
+   $message[] = 'Comentario eliminado!';
 
 }
 
@@ -28,7 +28,7 @@ if(isset($_POST['delete_comment'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>users accounts</title>
+   <title>Comentarios</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -39,17 +39,17 @@ if(isset($_POST['delete_comment'])){
 </head>
 <body>
 
-<?php include '../components/admin_header.php' ?>
+<?php include '../components/u_header.php' ?>
 
 <section class="comments">
 
-   <h1 class="heading">posts comments</h1>
+   <h1 class="heading">Comentarios de los Posts</h1>
    
-   <p class="comment-title">post comments</p>
+   <p class="comment-title">Comentarios del post</p>
    <div class="box-container">
    <?php
-         $select_comments = $conn->prepare("SELECT * FROM `comments` WHERE admin_id = ?");
-         $select_comments->execute([$admin_id]);
+         $select_comments = $conn->prepare("SELECT * FROM `comments` WHERE user_id = ?");
+         $select_comments->execute([$user_id]);
          if($select_comments->rowCount() > 0){
             while($fetch_comments = $select_comments->fetch(PDO::FETCH_ASSOC)){
       ?>
@@ -58,7 +58,7 @@ if(isset($_POST['delete_comment'])){
          $select_posts->execute([$fetch_comments['post_id']]);
          while($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)){
       ?>
-      <div class="post-title"> from : <span><?= $fetch_posts['title']; ?></span> <a href="read_post.php?post_id=<?= $fetch_posts['id']; ?>" >view post</a></div>
+      <div class="post-title"> en : <span><?= $fetch_posts['title']; ?></span> <a href="u_read_post.php?post_id=<?= $fetch_posts['id']; ?>" >ver post</a></div>
       <?php
          }
       ?>
@@ -73,14 +73,14 @@ if(isset($_POST['delete_comment'])){
       <div class="text"><?= $fetch_comments['comment']; ?></div>
       <form action="" method="POST">
          <input type="hidden" name="comment_id" value="<?= $fetch_comments['id']; ?>">
-         <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('delete this comment?');">delete comment</button>
+         <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('¿Deseas eliminar este comentario?');">Eliminar Comentario</button>
       </form>
    </div>
    <?php
          }
       }else{
-         echo '<p class="empty">no comments added yet!</p>';
-      }
+          echo '<p class="empty">¡Aún no se han agregado comentarios!</p>';
+        }
    ?>
    </div>
 

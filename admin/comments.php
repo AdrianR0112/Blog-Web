@@ -4,9 +4,9 @@ include '../components/connect.php';
 
 session_start();
 
-$admin_id = $_SESSION['admin_id'];
+$user_id = $_SESSION['admin_id'];
 
-if(!isset($admin_id)){
+if(!isset($user_id)){
    header('location:admin_login.php');
 }
 
@@ -49,7 +49,7 @@ if(isset($_POST['delete_comment'])){
    <div class="box-container">
    <?php
          $select_comments = $conn->prepare("SELECT * FROM `comments` WHERE admin_id = ?");
-         $select_comments->execute([$admin_id]);
+         $select_comments->execute([$user_id]);
          if($select_comments->rowCount() > 0){
             while($fetch_comments = $select_comments->fetch(PDO::FETCH_ASSOC)){
       ?>

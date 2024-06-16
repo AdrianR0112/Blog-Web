@@ -4,13 +4,14 @@ include 'components/connect.php';
 
 session_start();
 
-if(isset($_SESSION['user_id'])){
+if (isset($_SESSION['user_id'])) {
    $user_id = $_SESSION['user_id'];
-}else{
+} else {
    $user_id = '';
-};
+}
+;
 
-if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
 
    $email = $_POST['email'];
    $email = filter_var($email, FILTER_SANITIZE_STRING);
@@ -21,10 +22,10 @@ if(isset($_POST['submit'])){
    $select_user->execute([$email, $pass]);
    $row = $select_user->fetch(PDO::FETCH_ASSOC);
 
-   if($select_user->rowCount() > 0){
+   if ($select_user->rowCount() > 0) {
       $_SESSION['user_id'] = $row['id'];
       header('location:home.php');
-   }else{
+   } else {
       $message[] = 'incorrect username or password!';
    }
 
@@ -34,6 +35,7 @@ if(isset($_POST['submit'])){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,37 +47,40 @@ if(isset($_POST['submit'])){
    <link rel="stylesheet" href="css/style.css">
 
 </head>
+
 <body>
-   
-<?php include 'components/user_header.php'; ?>
 
-<section class="form-container">
+   <?php include 'components/user_header.php'; ?>
 
-   <form action="" method="post">
-      <h3>Iniciar Sesion</h3>
-      <input type="email" name="email" required placeholder="Introduce tu email" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="password" name="pass" required placeholder="Introduce tu contraseña" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="submit" value="Iniciar Sesion" name="submit" class="btn">
-      <div align="center">
+   <section class="form-container">
 
-      <?php require ('autentificacion.php'); ?>
-      <button type="button" name="google" class="btn2" onclick="window.location.href='<?php echo $client->createAuthUrl(); ?>'">
-         <i class="fa-brands fa-google"></i>
-         Iniciar sesión con Google
-      </button>
+      <form action="" method="post">
+         <h3>Iniciar Sesion</h3>
+         <input type="email" name="email" required placeholder="Introduce tu email" class="box" maxlength="50"
+            oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="password" name="pass" required placeholder="Introduce tu contraseña" class="box" maxlength="50"
+            oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="submit" value="Iniciar Sesion" name="submit" class="btn">
+         <div align="center">
 
-
-      <p>¿No tienes una cuenta? <a href="register.php">Registrate ahora</a></p>
-   </form>
-
-   
-</section>
+            <?php require ('autentificacion.php'); ?>
+            <button type="button" name="google" class="btn2"
+               onclick="window.location.href='<?php echo $client->createAuthUrl(); ?>'">
+               <i class="fa-brands fa-google"></i>
+               Iniciar sesión con Google
+            </button>
+            <p>¿No tienes una cuenta? <a href="register.php">Registrate ahora</a></p>
+      </form>
 
 
-<?php include 'components/footer.php'; ?>
+   </section>
 
 
-<script src="js/script.js"></script>
+   <?php include 'components/footer.php'; ?>
+
+
+   <script src="js/script.js"></script>
 
 </body>
+
 </html>

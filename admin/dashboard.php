@@ -4,9 +4,9 @@ include '../components/connect.php';
 
 session_start();
 
-$admin_id = $_SESSION['admin_id'];
+$user_id = $_SESSION['admin_id'];
 
-if(!isset($admin_id)){
+if(!isset($user_id)){
    header('location:admin_login.php');
 }
 
@@ -48,7 +48,7 @@ if(!isset($admin_id)){
    <div class="box">
       <?php
          $select_posts = $conn->prepare("SELECT * FROM `posts` WHERE admin_id = ?");
-         $select_posts->execute([$admin_id]);
+         $select_posts->execute([$user_id]);
          $numbers_of_posts = $select_posts->rowCount();
       ?>
       <h3><?= $numbers_of_posts; ?></h3>
@@ -59,7 +59,7 @@ if(!isset($admin_id)){
    <div class="box">
       <?php
          $select_active_posts = $conn->prepare("SELECT * FROM `posts` WHERE admin_id = ? AND status = ?");
-         $select_active_posts->execute([$admin_id, 'active']);
+         $select_active_posts->execute([$user_id, 'active']);
          $numbers_of_active_posts = $select_active_posts->rowCount();
       ?>
       <h3><?= $numbers_of_active_posts; ?></h3>
@@ -70,7 +70,7 @@ if(!isset($admin_id)){
    <div class="box">
       <?php
          $select_deactive_posts = $conn->prepare("SELECT * FROM `posts` WHERE admin_id = ? AND status = ?");
-         $select_deactive_posts->execute([$admin_id, 'deactive']);
+         $select_deactive_posts->execute([$user_id, 'deactive']);
          $numbers_of_deactive_posts = $select_deactive_posts->rowCount();
       ?>
       <h3><?= $numbers_of_deactive_posts; ?></h3>
@@ -103,7 +103,7 @@ if(!isset($admin_id)){
    <div class="box">
       <?php
          $select_comments = $conn->prepare("SELECT * FROM `comments` WHERE admin_id = ?");
-         $select_comments->execute([$admin_id]);
+         $select_comments->execute([$user_id]);
          $select_comments->execute();
          $numbers_of_comments = $select_comments->rowCount();
       ?>
@@ -115,7 +115,7 @@ if(!isset($admin_id)){
    <div class="box">
       <?php
          $select_likes = $conn->prepare("SELECT * FROM `likes` WHERE admin_id = ?");
-         $select_likes->execute([$admin_id]);
+         $select_likes->execute([$user_id]);
          $select_likes->execute();
          $numbers_of_likes = $select_likes->rowCount();
       ?>

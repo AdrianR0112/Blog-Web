@@ -4,10 +4,10 @@ include '../components/connect.php';
 
 session_start();
 
-$admin_id = $_SESSION['admin_id'];
+$user_id = $_SESSION['user_id'];
 
-if(!isset($admin_id)){
-   header('location:admin_login.php');
+if(!isset($user_id)){
+   header('location:../login.php');
 }
 
 $get_id = $_GET['post_id'];
@@ -48,7 +48,7 @@ if(isset($_POST['delete_comment'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>posts</title>
+   <title>Posts</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -59,13 +59,13 @@ if(isset($_POST['delete_comment'])){
 </head>
 <body>
 
-<?php include '../components/admin_header.php' ?>
+<?php include '../components/u_header.php' ?>
 
 <section class="read-post">
 
    <?php
-      $select_posts = $conn->prepare("SELECT * FROM `posts` WHERE admin_id = ? AND id = ?");
-      $select_posts->execute([$admin_id, $get_id]);
+      $select_posts = $conn->prepare("SELECT * FROM `posts` WHERE user_id = ? AND id = ?");
+      $select_posts->execute([$user_id, $get_id]);
       if($select_posts->rowCount() > 0){
          while($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)){
             $post_id = $fetch_posts['id'];
@@ -92,15 +92,15 @@ if(isset($_POST['delete_comment'])){
          <div class="comments"><i class="fas fa-comment"></i><span><?= $total_post_comments; ?></span></div>
       </div>
       <div class="flex-btn">
-         <a href="edit_post.php?id=<?= $post_id; ?>" class="inline-option-btn">edit</a>
-         <button type="submit" name="delete" class="inline-delete-btn" onclick="return confirm('delete this post?');">delete</button>
-         <a href="view_posts.php" class="inline-option-btn">go back</a>
+         <a href="u_edit_post.php?id=<?= $post_id; ?>" class="inline-option-btn">Editar</a>
+         <button type="submit" name="delete" class="inline-delete-btn" onclick="return confirm('¿Deseas eliminar este post?');">Eliminar</button>
+         <a href="u_view_posts.php" class="inline-option-btn">Regresar</a>
       </div>
    </form>
    <?php
          }
       }else{
-         echo '<p class="empty">no posts added yet! <a href="add_posts.php" class="btn" style="margin-top:1.5rem;">add post</a></p>';
+         echo '<p class="empty">¡aún no se han agregado publicaciones! <a href="add_posts.php" class="btn" style="margin-top:1.5rem;">agregar publicación</a></p>';
       }
    ?>
 
@@ -108,7 +108,7 @@ if(isset($_POST['delete_comment'])){
 
 <section class="comments" style="padding-top: 0;">
    
-   <p class="comment-title">post comments</p>
+   <p class="comment-title">Comentarios del Post</p>
    <div class="box-container">
    <?php
          $select_comments = $conn->prepare("SELECT * FROM `comments` WHERE post_id = ?");
@@ -127,28 +127,19 @@ if(isset($_POST['delete_comment'])){
       <div class="text"><?= $fetch_comments['comment']; ?></div>
       <form action="" method="POST">
          <input type="hidden" name="comment_id" value="<?= $fetch_comments['id']; ?>">
-         <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('delete this comment?');">delete comment</button>
+         <button type="submit" class="inline-delete-btn" name="delete_comment" onclick="return confirm('¿Deseas eliminar este comentario?');">Eliminar Comentario</button>
       </form>
    </div>
    <?php
          }
       }else{
-         echo '<p class="empty">no comments added yet!</p>';
+         echo '<p class="empty">¡Aún no se han agregado comentarios!</p>';
       }
    ?>
    </div>
 
 </section>
 
-
-
-
-
-
-
-
-
-<!-- custom js file link  -->
 <script src="../js/admin_script.js"></script>
 
 </body>

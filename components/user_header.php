@@ -1,4 +1,12 @@
 <?php
+if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
+   $user_id = $_SESSION['user_id'];
+} else {
+   $user_id = '';
+}
+?>
+
+<?php
 if (isset($message)) {
    foreach ($message as $message) {
       echo '
@@ -15,7 +23,6 @@ if (isset($message)) {
 
    <section class="flex">
 
-      <!-- <a href="home.php" class="logo">ChullaBlog</a> -->
       <a href="home.php" class="logo">
          <span class="color-yellow">Ch</span><span class="color-blue">ulla</span><span class="color-red">Blog</span>
       </a>
@@ -26,6 +33,11 @@ if (isset($message)) {
       </form>
 
       <div class="icons">
+         <?php if (!empty($user_id)): ?>
+            <a href="user/u_dashboard.php">
+               <div id="post-btn" class="fa-solid fa-pen-to-square"></div>
+            </a>
+         <?php endif; ?>
          <div id="menu-btn" class="fas fa-bars"></div>
          <div id="search-btn" class="fas fa-search"></div>
          <div id="user-btn" class="fas fa-user"></div>
@@ -37,7 +49,7 @@ if (isset($message)) {
          <a href="all_category.php"> <i class="fas fa-th-list"></i> categorías</a>
          <a href="authors.php"> <i class="fas fa-user-edit"></i> autores</a>
          <a href="login.php"> <i class="fa-solid fa-door-open"></i> iniciar sesión</a>
-         <a href="register.php"> <i class="fas fa-user-plus"></i> registrarse</a>
+         <a href="register.php"> <i class="fas fa-user-plus"></i>registrarse</a>
       </nav>
 
       <div class="profile">
@@ -49,17 +61,14 @@ if (isset($message)) {
             ?>
             <p class="name"><?= $fetch_profile['name']; ?></p>
             <a href="update.php" class="btn">actualizar perfil</a>
-            <div class="flex-btn">
-               <a href="login.php" class="option-btn">iniciar sesión</a>
-               <a href="register.php" class="option-btn">registrarse</a>
-            </div>
             <a href="components/user_logout.php" onclick="return confirm('¿cerrar sesión en este sitio web?');"
                class="delete-btn">cerrar sesión</a>
             <?php
          } else {
             ?>
-            <p class="name">¡Por favor inicia sesión!</p>
+            <p class="name">¡Inicia sesión o Registrate!</p>
             <a href="login.php" class="option-btn">iniciar sesión</a>
+            <a href="register.php" class="option-btn">Registrarse</a>
             <?php
          }
          ?>
