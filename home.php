@@ -35,62 +35,56 @@ include 'components/like_post.php';
    <?php include 'components/user_header.php'; ?>
 
    <section class="home-grid">
-        <div class="box-container">
+      <div class="box-container">
 
-            <div class="box">
-                <?php
-                $select_profile = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
-                $select_profile->execute([$user_id]);
-                if ($select_profile->rowCount() > 0) {
-                    $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
-                    $count_user_comments = $conn->prepare("SELECT * FROM `comments` WHERE user_id = ?");
-                    $count_user_comments->execute([$user_id]);
-                    $total_user_comments = $count_user_comments->rowCount();
-                    $count_user_likes = $conn->prepare("SELECT * FROM `likes` WHERE user_id = ?");
-                    $count_user_likes->execute([$user_id]);
-                    $total_user_likes = $count_user_likes->rowCount();
-                    ?>
-                    <p>Bienvenido <span><?= $fetch_profile['name']; ?></span></p>
-                    <p>Total Comentarios : <span><?= $total_user_comments; ?></span></p>
-                    <p>Posts que te gustaron : <span><?= $total_user_likes; ?></span></p>
-                    <!-- <a href="update.php" class="btn">Actualizar perfil</a> -->
-                    <div class="flex-btn">
-                        <a href="user_likes.php" class="option-btn">Me gusta</a>
-                        <a href="user_comments.php" class="option-btn">Comentarios</a>
-                    </div>
-                    <?php
-                } else {
-                    ?>
-                    <p class="name">¿Deseas realizar una publicación?</p>
-                    <div class="flex-btn">
-                        <a href="login.php" class="option-btn">Iniciar sesión</a>
-                        <a href="register.php" class="option-btn">Registrarse</a>
-                    </div>
-                    <?php
-                }
-                ?>
+         <div class="box">
+            <?php
+            $select_profile = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
+            $select_profile->execute([$user_id]);
+            if ($select_profile->rowCount() > 0) {
+               $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
+               $count_user_comments = $conn->prepare("SELECT * FROM `comments` WHERE user_id = ?");
+               $count_user_comments->execute([$user_id]);
+               $total_user_comments = $count_user_comments->rowCount();
+               $count_user_likes = $conn->prepare("SELECT * FROM `likes` WHERE user_id = ?");
+               $count_user_likes->execute([$user_id]);
+               $total_user_likes = $count_user_likes->rowCount();
+               ?>
+               <p>Bienvenid@ <span><?= $fetch_profile['name']; ?></span></p>
+               <a href="user/u_add_posts.php" class="btn">Añadir nuevo post</a>
+               <?php
+            } else {
+               ?>
+               <p class="name">¿Deseas realizar una publicación?</p>
+               <div class="flex-btn">
+                  <a href="login.php" class="option-btn">Iniciar sesión</a>
+                  <a href="register.php" class="option-btn">Registrarse</a>
+               </div>
+               <?php
+            }
+            ?>
+         </div>
+
+         <div class="box">
+            <p>Categorías</p>
+            <div class="slider">
+               <div class="slide-track">
+                  <div class="slide"><a href="category.php?category=naturaleza" class="box-slider">Naturaleza</a></div>
+                  <div class="slide"><a href="category.php?category=educacion" class="box-slider">Educación</a></div>
+                  <div class="slide"><a href="category.php?category=negocios" class="box-slider">Negocios</a></div>
+                  <div class="slide"><a href="category.php?category=viajes" class="box-slider">Viajes</a></div>
+                  <div class="slide"><a href="category.php?category=noticias" class="box-slider">Noticias</a></div>
+                  <div class="slide"><a href="category.php?category=gaming" class="box-slider">Gaming</a></div>
+                  <div class="slide"><a href="category.php?category=deportes" class="box-slider">Deportes</a></div>
+                  <div class="slide"><a href="category.php?category=diseño" class="box-slider">Diseño</a></div>
+                  <div class="slide"><a href="category.php?category=moda" class="box-slider">Moda</a></div>
+                  <div class="slide"><a href="category.php?category=personal" class="box-slider">Personal</a></div>
+               </div>
             </div>
+         </div>
 
-            <div class="box">
-                <p>Categorías</p>
-                <div class="slider">
-                    <div class="slide-track">
-                        <div class="slide"><a href="category.php?category=naturaleza" class="box-slider">Naturaleza</a></div>
-                        <div class="slide"><a href="category.php?category=educacion" class="box-slider">Educación</a></div>
-                        <div class="slide"><a href="category.php?category=negocios" class="box-slider">Negocios</a></div>
-                        <div class="slide"><a href="category.php?category=viajes" class="box-slider">Viajes</a></div>
-                        <div class="slide"><a href="category.php?category=noticias" class="box-slider">Noticias</a></div>
-                        <div class="slide"><a href="category.php?category=gaming" class="box-slider">Gaming</a></div>
-                        <div class="slide"><a href="category.php?category=deportes" class="box-slider">Deportes</a></div>
-                        <div class="slide"><a href="category.php?category=diseño" class="box-slider">Diseño</a></div>
-                        <div class="slide"><a href="category.php?category=moda" class="box-slider">Moda</a></div>
-                        <div class="slide"><a href="category.php?category=personal" class="box-slider">Personal</a></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
+      </div>
+   </section>
 
    <section class="posts-container">
 
@@ -162,7 +156,6 @@ include 'components/like_post.php';
       </div>
 
    </section>
-
 
    <?php include 'components/footer.php'; ?>
    <script src="js/script.js"></script>

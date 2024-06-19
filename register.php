@@ -26,10 +26,10 @@ if(isset($_POST['submit'])){
    $row = $select_user->fetch(PDO::FETCH_ASSOC);
 
    if($select_user->rowCount() > 0){
-      $message[] = 'email already exists!';
+      $message[] = '¡El correo electrónico ya existe!';
    }else{
       if($pass != $cpass){
-         $message[] = 'confirm password not matched!';
+          $message[] = '¡La confirmación de contraseña no coincide!';
       }else{
          $insert_user = $conn->prepare("INSERT INTO `users`(name, email, password) VALUES(?,?,?)");
          $insert_user->execute([$name, $email, $cpass]);
@@ -53,7 +53,7 @@ if(isset($_POST['submit'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>register</title>
+   <title>Registro</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
@@ -73,21 +73,12 @@ if(isset($_POST['submit'])){
       <input type="password" name="pass" required placeholder="Introduce tu contraseña" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="cpass" required placeholder="Confirma tu contraseña" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="submit" value="Registrate ahora" name="submit" class="btn">
-
-      <?php require ('autentificacion.php'); ?>
-      <button type="button" name="google" class="btn2" onclick="window.location.href='<?php echo $client->createAuthUrl(); ?>'">
-         <i class="fa-brands fa-google"></i>
-         Registrate con Google
-      </button>
       <p>¿Ya tienes una cuenta? <a href="login.php">Iniciar Sesion</a></p>
    </form>
 
 </section>
 
-
-
 <?php include 'components/footer.php'; ?>
-
 
 <script src="js/script.js"></script>
 

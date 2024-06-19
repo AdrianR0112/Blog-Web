@@ -58,7 +58,7 @@ include 'components/like_post.php';
       ?>
       <form class="box" method="post">
          <input type="hidden" name="post_id" value="<?= $post_id; ?>">
-         <input type="hidden" name="admin_id" value="<?= $fetch_posts['admin_id']; ?>">
+         <input type="hidden" name="admin_id" value="<?= $fetch_posts['user_id']; ?>">
          <div class="post-admin">
             <i class="fas fa-user"></i>
             <div>
@@ -93,7 +93,6 @@ include 'components/like_post.php';
    </div>
 
 </section>
-
 
 <?php include 'components/footer.php'; ?>
 

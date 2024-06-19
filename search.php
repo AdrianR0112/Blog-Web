@@ -22,7 +22,6 @@ include 'components/like_post.php';
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Busqueda</title>
 
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
    <link rel="stylesheet" href="css/style.css">
@@ -61,7 +60,7 @@ include 'components/like_post.php';
       ?>
       <form class="box" method="post">
          <input type="hidden" name="post_id" value="<?= $post_id; ?>">
-         <input type="hidden" name="admin_id" value="<?= $fetch_posts['admin_id']; ?>">
+         <input type="hidden" name="admin_id" value="<?= $fetch_posts['user_id']; ?>">
          <div class="post-admin">
             <i class="fas fa-user"></i>
             <div>

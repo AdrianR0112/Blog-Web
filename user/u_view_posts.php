@@ -12,22 +12,19 @@ if (!isset($user_id)) {
 
 if (isset($_POST['delete'])) {
    $p_id = $_POST['post_id'];
-   $p_id = filter_var($p_id, FILTER_SANITIZE_NUMBER_INT); // Sanitizar como número entero
+   $p_id = filter_var($p_id, FILTER_SANITIZE_NUMBER_INT);
 
-   // Obtener información del post para eliminar la imagen si existe
    $delete_image = $conn->prepare("SELECT * FROM `posts` WHERE id = ? AND user_id = ?");
    $delete_image->execute([$p_id, $user_id]);
    $fetch_delete_image = $delete_image->fetch(PDO::FETCH_ASSOC);
 
    if ($fetch_delete_image && !empty($fetch_delete_image['image'])) {
-      // Eliminar la imagen física del servidor
       $image_path = '../uploaded_img/' . $fetch_delete_image['image'];
       if (file_exists($image_path)) {
          unlink($image_path);
       }
    }
 
-   // Eliminar el post y sus comentarios asociados
    $delete_post = $conn->prepare("DELETE FROM `posts` WHERE id = ? AND user_id = ?");
    $delete_post->execute([$p_id, $user_id]);
 
@@ -47,10 +44,8 @@ if (isset($_POST['delete'])) {
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Posts</title>
 
-   <!-- Font Awesome CDN link -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-   <!-- Custom CSS file link -->
    <link rel="stylesheet" href="../css/admin_style.css">
 </head>
 
@@ -71,12 +66,10 @@ if (isset($_POST['delete'])) {
             while ($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)) {
                $post_id = $fetch_posts['id'];
 
-               // Contar comentarios del post
                $count_post_comments = $conn->prepare("SELECT * FROM `comments` WHERE post_id = ?");
                $count_post_comments->execute([$post_id]);
                $total_post_comments = $count_post_comments->rowCount();
 
-               // Contar likes del post
                $count_post_likes = $conn->prepare("SELECT * FROM `likes` WHERE post_id = ?");
                $count_post_likes->execute([$post_id]);
                $total_post_likes = $count_post_likes->rowCount();

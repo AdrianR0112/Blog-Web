@@ -98,10 +98,7 @@ include 'components/like_post.php';
 
 </section>
 
-
 <?php include 'components/footer.php'; ?>
-
-
 
 <script src="js/script.js"></script>
 

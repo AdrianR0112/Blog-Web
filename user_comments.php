@@ -49,18 +49,14 @@ if(isset($_POST['delete_comment'])){
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>update profile</title>
 
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
    
-<!-- header section starts  -->
 <?php include 'components/user_header.php'; ?>
-<!-- header section ends -->
 
 <?php
    if(isset($_POST['open_edit_box'])){
@@ -89,7 +85,7 @@ if(isset($_POST['delete_comment'])){
 
    <h1 class="heading">tus comentarios</h1>
 
-   <p class="comment-title">Tus comentarios en el posts</p>
+   <p class="comment-title">Tus comentarios</p>
    <div class="user-comments-container">
       <?php
          $select_comments = $conn->prepare("SELECT * FROM `comments` WHERE user_id = ?");
@@ -103,7 +99,7 @@ if(isset($_POST['delete_comment'])){
             $select_posts->execute([$fetch_comments['post_id']]);
             while($fetch_posts = $select_posts->fetch(PDO::FETCH_ASSOC)){
          ?>
-         <div class="post-title"> from : <span><?= $fetch_posts['title']; ?></span> <a href="view_post.php?post_id=<?= $fetch_posts['id']; ?>" >mirar post</a></div>
+         <div class="post-title"> en : <span><?= $fetch_posts['title']; ?></span> <a href="view_post.php?post_id=<?= $fetch_posts['id']; ?>" >mirar post</a></div>
          <?php
             }
          ?>
@@ -124,18 +120,8 @@ if(isset($_POST['delete_comment'])){
 
 </section>
 
-
-
-
-
-
-
-
-
-
 <?php include 'components/footer.php'; ?>
 
-<!-- custom js file link  -->
 <script src="js/script.js"></script>
 
 </body>

@@ -34,9 +34,6 @@ include 'components/like_post.php';
 
    <?php include 'components/user_header.php'; ?>
 
-
-
-
    <section class="categories">
 
       <h1 class="heading">Categorías</h1>
@@ -44,12 +41,12 @@ include 'components/like_post.php';
       <div class="box-container">
          <div class="box"><span>01</span><a href="category.php?category=naturaleza">Naturaleza</a></div>
          <div class="box"><span>02</span><a href="category.php?category=educacion">Educación</a></div>
-         <div class="box"><span>03</span><a href="category.php?category=mascotas_y_animales">Mascotas y animales</a></div>
+         <div class="box"><span>03</span><a href="category.php?category=mascotas y animales">Mascotas y animales</a></div>
          <div class="box"><span>04</span><a href="category.php?category=tecnologia">Tecnología</a></div>
          <div class="box"><span>05</span><a href="category.php?category=moda">Moda</a></div>
          <div class="box"><span>06</span><a href="category.php?category=entretenimiento">Entretenimiento</a></div>
          <div class="box"><span>07</span><a href="category.php?category=peliculas">Películas</a></div>
-         <div class="box"><span>08</span><a href="category.php?category=juegos">Juegos</a></div>
+         <div class="box"><span>08</span><a href="category.php?category=juegos">VideoJuegos</a></div>
          <div class="box"><span>09</span><a href="category.php?category=musica">Música</a></div>
          <div class="box"><span>10</span><a href="category.php?category=deportes">Deportes</a></div>
          <div class="box"><span>11</span><a href="category.php?category=noticias">Noticias</a></div>
@@ -62,17 +59,12 @@ include 'components/like_post.php';
          <div class="box"><span>18</span><a href="category.php?category=negocios">Negocios</a></div>
          <div class="box"><span>19</span><a href="category.php?category=compras">Compras</a></div>
          <div class="box"><span>20</span><a href="category.php?category=animaciones">Animaciones</a></div>
-
       </div>
 
    </section>
 
-
    <?php include 'components/footer.php'; ?>
 
-
    <script src="js/script.js"></script>
-
 </body>
-
 </html>

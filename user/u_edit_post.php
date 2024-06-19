@@ -39,10 +39,10 @@ if (isset($_POST['save'])) {
 
    if (!empty($image)) {
       if ($image_size > 2000000) {
-          $message[] = 'El tamaño de la imagen es demasiado grande!';
-        } elseif ($select_image->rowCount() > 0 and $image != '') {
-          $message[] = 'Por favor cambie el nombre de su imagen!';
-        } else {
+         $message[] = 'El tamaño de la imagen es demasiado grande!';
+      } elseif ($select_image->rowCount() > 0 and $image != '') {
+         $message[] = 'Por favor cambie el nombre de su imagen!';
+      } else {
          $update_image = $conn->prepare("UPDATE `posts` SET image = ? WHERE id = ?");
          move_uploaded_file($image_tmp_name, $image_folder);
          $update_image->execute([$image, $post_id]);
@@ -143,27 +143,27 @@ if (isset($_POST['delete_image'])) {
                <p>Categoría del post<span>*</span></p>
                <select name="category" class="box" required>
                   <option value="<?= $fetch_posts['category']; ?>" selected><?= $fetch_posts['category']; ?></option>
-                  <option value="nature">Naturaleza</option>
-                  <option value="education">Educación</option>
-                  <option value="pets and animals">Mascotas y animales</option>
-                  <option value="technology">Tecnología</option>
-                  <option value="fashion">Moda</option>
-                  <option value="entertainment">Entretenimiento</option>
-                  <option value="movies and animations">Cine y animaciones</option>
-                  <option value="gaming">Videojuegos</option>
-                  <option value="music">Música</option>
-                  <option value="sports">Deportes</option>
-                  <option value="news">Noticias</option>
-                  <option value="travel">Viajes</option>
-                  <option value="comedy">Comedia</option>
-                  <option value="design and development">Diseño y desarrollo</option>
-                  <option value="food and drinks">Comida y bebidas</option>
-                  <option value="lifestyle">Estilo de vida</option>
-                  <option value="personal">Personal</option>
-                  <option value="health and fitness">Salud y fitness</option>
-                  <option value="business">Negocios</option>
-                  <option value="shopping">Compras</option>
-                  <option value="animations">Animaciones</option>
+                  <option value="Naturaleza">Naturaleza</option>
+                  <option value="Educación">Educación</option>
+                  <option value="Mascotas y animales">Mascotas y animales</option>
+                  <option value="Tecnología">Tecnología</option>
+                  <option value="Moda">Moda</option>
+                  <option value="Entretenimiento">Entretenimiento</option>
+                  <option value="Cine y animaciones">Cine y animaciones</option>
+                  <option value="Videojuegos">Videojuegos</option>
+                  <option value="Música">Música</option>
+                  <option value="Deportes">Deportes</option>
+                  <option value="Noticias">Noticias</option>
+                  <option value="Viajes">Viajes</option>
+                  <option value="Comedia">Comedia</option>
+                  <option value="Diseño y desarrollo">Diseño y desarrollo</option>
+                  <option value="Comida y bebidas">Comida y bebidas</option>
+                  <option value="Estilo de vida">Estilo de vida</option>
+                  <option value="Personal">Personal</option>
+                  <option value="Salud y fitness">Salud y fitness</option>
+                  <option value="Negocios">Negocios</option>
+                  <option value="Compras">Compras</option>
+                  <option value="Animaciones">Animaciones</option>
                </select>
                <p>Imagen del post</p>
                <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png, image/webp">

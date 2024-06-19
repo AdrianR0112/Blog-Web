@@ -45,11 +45,12 @@ if (isset($message)) {
 
       <nav class="navbar">
          <a href="home.php"> <i class="fas fa-home"></i> inicio</a>
-         <a href="posts.php"> <i class="fas fa-newspaper"></i> publicaciones</a>
-         <a href="all_category.php"> <i class="fas fa-th-list"></i> categorías</a>
-         <a href="authors.php"> <i class="fas fa-user-edit"></i> autores</a>
-         <a href="login.php"> <i class="fa-solid fa-door-open"></i> iniciar sesión</a>
-         <a href="register.php"> <i class="fas fa-user-plus"></i>registrarse</a>
+         <a href="all_category.php"> <i class="fas fa-th-list"></i> Categorías</a>
+         <a href="authors.php"> <i class="fas fa-user-edit"></i> Autores</a>
+         <?php if (!empty($user_id)): ?>
+            <a href="user_comments.php"> <i class="fa-solid fa-comments"></i> Tus comentarios</a>
+            <a href="user_likes.php"> <i class="fa-solid fa-heart"></i> Tus likes</a>
+         <?php endif; ?>
       </nav>
 
       <div class="profile">

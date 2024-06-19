@@ -42,30 +42,30 @@ include 'components/like_post.php';
       <div class="box-container">
 
          <?php
-         $select_author = $conn->prepare("SELECT * FROM `admin`");
+         $select_author = $conn->prepare("SELECT * FROM `users`");
          $select_author->execute();
          if ($select_author->rowCount() > 0) {
             while ($fetch_authors = $select_author->fetch(PDO::FETCH_ASSOC)) {
 
-               $count_admin_posts = $conn->prepare("SELECT * FROM `posts` WHERE admin_id = ? AND status = ?");
-               $count_admin_posts->execute([$fetch_authors['id'], 'active']);
-               $total_admin_posts = $count_admin_posts->rowCount();
+               $count_user_posts = $conn->prepare("SELECT * FROM `posts` WHERE user_id = ? AND status = ?");
+               $count_user_posts->execute([$fetch_authors['id'], 'active']);
+               $total_user_posts = $count_user_posts->rowCount();
 
-               $count_admin_likes = $conn->prepare("SELECT * FROM `likes` WHERE admin_id = ?");
-               $count_admin_likes->execute([$fetch_authors['id']]);
-               $total_admin_likes = $count_admin_likes->rowCount();
+               $count_user_likes = $conn->prepare("SELECT * FROM `likes` WHERE user_id = ?");
+               $count_user_likes->execute([$fetch_authors['id']]);
+               $total_user_likes = $count_user_likes->rowCount();
 
-               $count_admin_comments = $conn->prepare("SELECT * FROM `comments` WHERE admin_id = ?");
-               $count_admin_comments->execute([$fetch_authors['id']]);
-               $total_admin_comments = $count_admin_comments->rowCount();
+               $count_user_comments = $conn->prepare("SELECT * FROM `comments` WHERE user_id = ?");
+               $count_user_comments->execute([$fetch_authors['id']]);
+               $total_user_comments = $count_user_comments->rowCount();
 
                ?>
                <div class="box">
                   <p>Autor : <span><?= $fetch_authors['name']; ?></span></p>
-                  <p>total posts : <span><?= $total_admin_posts; ?></span></p>
-                  <p>posts likes : <span><?= $total_admin_likes; ?></span></p>
-                  <p>Comentarios : <span><?= $total_admin_comments; ?></span></p>
-                  <a href="author_posts.php?author=<?= $fetch_authors['name']; ?>" class="btn">view posts</a>
+                  <p>Total posts : <span><?= $total_user_posts; ?></span></p>
+                  <p>Posts likes : <span><?= $total_user_likes; ?></span></p>
+                  <p>Comentarios : <span><?= $total_user_comments; ?></span></p>
+                  <a href="author_posts.php?author=<?= $fetch_authors['name']; ?>" class="btn">ver posts</a>
                </div>
                <?php
             }
@@ -78,10 +78,7 @@ include 'components/like_post.php';
 
    </section>
 
-
-
    <?php include 'components/footer.php'; ?>
-
 
    <script src="js/script.js"></script>
 

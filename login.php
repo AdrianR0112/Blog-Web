@@ -26,8 +26,8 @@ if (isset($_POST['submit'])) {
       $_SESSION['user_id'] = $row['id'];
       header('location:home.php');
    } else {
-      $message[] = 'incorrect username or password!';
-   }
+      $message[] = '¡Nombre de usuario o contraseña incorrectos!';
+      }
 
 }
 
@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>login</title>
+   <title>Iniciar Sesion</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
@@ -62,22 +62,12 @@ if (isset($_POST['submit'])) {
             oninput="this.value = this.value.replace(/\s/g, '')">
          <input type="submit" value="Iniciar Sesion" name="submit" class="btn">
          <div align="center">
-
-            <?php require ('autentificacion.php'); ?>
-            <button type="button" name="google" class="btn2"
-               onclick="window.location.href='<?php echo $client->createAuthUrl(); ?>'">
-               <i class="fa-brands fa-google"></i>
-               Iniciar sesión con Google
-            </button>
             <p>¿No tienes una cuenta? <a href="register.php">Registrate ahora</a></p>
       </form>
 
-
    </section>
 
-
    <?php include 'components/footer.php'; ?>
-
 
    <script src="js/script.js"></script>
 

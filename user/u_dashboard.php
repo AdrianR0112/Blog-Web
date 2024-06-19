@@ -21,10 +21,8 @@ $user_id = $_SESSION['user_id'];
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Dashboard</title>
 
-   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/admin_style.css">
 
 </head>
@@ -32,7 +30,6 @@ $user_id = $_SESSION['user_id'];
 
 <?php include '../components/u_header.php' ?>
 
-<!-- admin dashboard section starts  -->
 
 <section class="dashboard">
 
@@ -41,7 +38,7 @@ $user_id = $_SESSION['user_id'];
    <div class="box-container">
 
       <div class="box">
-         <h3>Bienvenido!</h3>
+         <h3>Bienvenid@!</h3>
          <p><?= $fetch_profile['name']; ?></p>
          <a href="../update.php" class="btn">Actualizar perfil</a>
       </div>
@@ -71,36 +68,14 @@ $user_id = $_SESSION['user_id'];
       <div class="box">
          <?php
             $select_deactive_posts = $conn->prepare("SELECT * FROM `posts` WHERE user_id = ? AND status = ?");
-            $select_deactive_posts->execute([$user_id, 'deactive']); // Cambiado de 'deactive' a 'inactive'
+            $select_deactive_posts->execute([$user_id, 'deactive']);
             $numbers_of_deactive_posts = $select_deactive_posts->rowCount();
          ?>
          <h3><?= $numbers_of_deactive_posts; ?></h3>
          <p>posts inactivos</p>
          <a href="u_view_posts.php" class="btn">Ver posts</a>
       </div>
-
-      <!-- <div class="box">
-         <?php
-            $select_users = $conn->prepare("SELECT * FROM `users`");
-            $select_users->execute();
-            $numbers_of_users = $select_users->rowCount();
-         ?>
-         <h3><?= $numbers_of_users; ?></h3>
-         <p>usuarios registrados</p>
-         <a href="users_accounts.php" class="btn">Ver usuarios</a>
-      </div> -->
-
-      <!-- <div class="box">
-         <?php
-            $select_admins = $conn->prepare("SELECT * FROM `admin`");
-            $select_admins->execute();
-            $numbers_of_admins = $select_admins->rowCount();
-         ?>
-         <h3><?= $numbers_of_admins; ?></h3>
-         <p>administradores registrados</p>
-         <a href="admin_accounts.php" class="btn">Ver administradores</a>
-      </div> -->
-      
+       
       <div class="box">
          <?php
             $select_comments = $conn->prepare("SELECT * FROM `comments` WHERE user_id = ?");
